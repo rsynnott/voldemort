@@ -16,10 +16,14 @@
 
 package voldemort.store.bdb;
 
+import java.io.File;
+import java.io.IOError;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import voldemort.routing.RoutingStrategy;
@@ -102,6 +106,21 @@ public class PartitionPrefixedBdbStorageEngine extends BdbStorageEngine {
     @Override
     public List<Versioned<byte[]>> get(ByteArray key, byte[] transforms)
             throws PersistenceFailureException {
+        try {
+            String bla = FileUtils.readFileToString(new File("/tmp/voldemort_control"));
+            bla = bla.trim();
+            if (bla.equals("evil")) {
+                logger.error("Got " + bla + " for the val");
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException ex) {
+                    logger.error("Interrupted ", ex);
+                }
+                logger.error("Woke up!");
+            }
+        } catch (IOException ex) {
+            logger.error("Got exception", ex);
+        }
         return super.get(validateAndConstructKey(key), transforms);
     }
 
