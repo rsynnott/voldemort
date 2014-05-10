@@ -1,0 +1,17 @@
+<stores>
+  <store>
+    <name>main</name>
+    <persistence>bdb</persistence>
+    <routing-strategy>consistent-routing</routing-strategy>
+    <routing>client</routing>
+    <replication-factor>3</replication-factor>
+    <required-reads>2</required-reads>
+    <required-writes>2</required-writes>
+    <key-serializer>
+      <type>identity</type>
+    </key-serializer>
+    <value-serializer>
+      <type>identity</type>
+    </value-serializer>
+  </store>
+</stores>
